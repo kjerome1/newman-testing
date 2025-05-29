@@ -1,0 +1,123 @@
+{
+	"id": "2078fe1b-dea8-4d3b-afa0-92a119369e44",
+	"name": "Weather API Testing",
+	"values": [
+		{
+			"key": "api_key",
+			"value": "9066c8a98bae17660cb94ed2fde38961",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "PLATOAPITESTING",
+			"value": "bad431f45637531b77e4dac4ecfd4be1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "zip code",
+			"value": "90210",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "country code",
+			"value": "CA",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "city",
+			"value": "Fredericton",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalid_city",
+			"value": "testville",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://api.openweathermap.org",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "lat",
+			"value": "43.6435",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "lon",
+			"value": "79.3791",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalid_lat",
+			"value": "abc",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalid_lon",
+			"value": "xyz",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalid_zip_code",
+			"value": "abc12",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalid_api_key",
+			"value": "0123456789",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "lat_death_valley",
+			"value": "36.5323",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "lon_death_valley",
+			"value": "116.9325",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "valid_date_format",
+			"value": "1747753200",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "invalid_date_format",
+			"value": "may232025",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "units",
+			"value": "metric",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "cityId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2025-05-29T13:50:45.921Z",
+	"_postman_exported_using": "Postman/11.47.0"
+}
