@@ -1,0 +1,514 @@
+{
+	"info": {
+		"_postman_id": "6be795e5-09ad-44c5-828d-684cca05d6d7",
+		"name": "Day 5 Lab: Practical Lab - Writing Tests in Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1622487"
+	},
+	"item": [
+		{
+			"name": "Exercise 1: Writing Basic Assertions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"pm.test(\"Content-Type is application/json\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/2.5/weather?lat={{lat}}&lon={{lon}}&units={{units}}&appid={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "{{lat}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{lon}}"
+						},
+						{
+							"key": "units",
+							"value": "{{units}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise 2: Validating JSON Responses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Weather is an array\", function () {\r",
+							"    pm.expect(jsonData.weather).to.be.an(\"array\");\r",
+							"});\r",
+							"pm.test(\"Main field is a string\", function () {\r",
+							"    pm.expect(jsonData.weather[0].main).to.be.a(\"string\");\r",
+							"});\r",
+							"pm.test(\"Temperature is a number\", function () {\r",
+							"    pm.expect(jsonData.main.temp).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"// Test by Kealy\r",
+							"pm.test(\"Weather array contains a proper main string\", function () {\r",
+							"    pm.expect(jsonData.weather[0]).to.have.property(\"main\");\r",
+							"    pm.expect(jsonData.weather[0].main).to.be.a(\"string\");\r",
+							"    pm.expect(jsonData.weather[0].main).to.match(/^(Clear|Clouds|Drizzle|Rain|Snow|Thunderstorm|Mist|Smoke|Haze|Dust|Fog|Sand|Ash|Squall|Tornado)$/);\r",
+							"    console.log(\"Current weather: \",jsonData.weather[0].main);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/2.5/weather?lat={{lat}}&lon={{lon}}&units={{units}}&appid={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "{{lat}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{lon}}"
+						},
+						{
+							"key": "units",
+							"value": "{{units}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise 3: Using Postman Snippets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"//Ensure the response body contains name\r",
+							"pm.test(\"Response contains name\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"name\");\r",
+							"});\r",
+							"//Ensure the response body contains weather\r",
+							"pm.test(\"Response contains: weather\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"weather\");\r",
+							"});\r",
+							"//Ensure the response body contains main\r",
+							"pm.test(\"Response contains: main\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"main\");\r",
+							"});\r",
+							"//Validate that temp is within a reasonable range (-50 to 50 degrees Celsius)\r",
+							"pm.test(\"Temperature is within a reasonable range\", function () {\r",
+							"    pm.expect(jsonData.main.temp).to.be.within(-50, 50);\r",
+							"});\r",
+							"//Validate that the weather array contains at least one element\r",
+							"pm.test(\"Weather array has at least one item\", function () {\r",
+							"    pm.expect(jsonData.weather.length).to.be.at.least(1);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/2.5/weather?lat={{lat}}&lon={{lon}}&units={{units}}&appid={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "{{lat}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{lon}}"
+						},
+						{
+							"key": "units",
+							"value": "{{units}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise 4: Implementing Loops in Tests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var weatherArray = pm.response.json().list;\r",
+							"\r",
+							"var count = 0;\r",
+							"weatherArray.forEach((item) => {\r",
+							"    pm.test(`Weather item ${item.id} has required properties`, function () {\r",
+							"        pm.expect(item.weather[0]).to.have.property(\"id\");\r",
+							"        pm.expect(item.weather[0]).to.have.property(\"main\");\r",
+							"        pm.expect(item.weather[0]).to.have.property(\"description\");\r",
+							"        count++;\r",
+							"    });\r",
+							"    console.log(`${count}: Weather condition: ID-${item.weather[0].id} -  ${item.weather[0].main} - ${item.weather[0].description}`);\r",
+							"});\r",
+							"//console.log(\"iterations: \"+count)\r",
+							"/*\r",
+							"for(let i =0; i<jsonData.list.length; i++){\r",
+							"    let id = jsonData.list[i].weather[0].id;\r",
+							"    let item = jsonData.list[i].weather[0];\r",
+							"     pm.test(`Weather item ${id} has required properties`, function () {\r",
+							"        pm.expect(item).to.have.property(\"id\");\r",
+							"        pm.expect(item).to.have.property(\"main\");\r",
+							"        pm.expect(item).to.have.property(\"description\");        \r",
+							"    });\r",
+							"    console.log(`${i}: Weather condition: ${item.main} - ${item.description}`);\r",
+							"}\r",
+							"*/\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/2.5/forecast?lat={{lat}}&lon={{lon}}&appid={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"forecast"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "{{lat}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{lon}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise 5: Writing Conditional Statements",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let temp = pm.response.json().main.temp;\r",
+							"\r",
+							"if (temp < 10) {\r",
+							"    console.log(\"Cold Weather\");\r",
+							"} else if (temp > 20) {\r",
+							"    console.log(\"Warm Weather\");\r",
+							"} else {\r",
+							"    console.log(\"Moderate Weather\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/2.5/weather?lat={{lat}}&lon={{lon}}&units={{units}}&appid={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "{{lat}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{lon}}"
+						},
+						{
+							"key": "units",
+							"value": "{{units}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise 6: Advanced Assertions and Edge Cases",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//1. Write a test to verify that temp_min is never greater than temp_max.\r",
+							"pm.test(\"Verify temp min is not greater than temp max\", function () {\r",
+							"    pm.expect(jsonData.main.temp_min).to.be.at.most(jsonData.main.temp_max);\r",
+							"});\r",
+							"\r",
+							"//2. Write a test to check if the city name contains at least one vowel.\r",
+							"pm.test(\"Verify city name contains at least one vowel\", function () {\r",
+							"    let vowel = ['a','e','i','o','u'];\r",
+							"    let cityName = jsonData.name.toLowerCase();\r",
+							"    pm.expect(jsonData.name).to.contain.oneOf(vowel);\r",
+							"    //pm.expect(cityName).to.match(/[aeiou]/, \"City name must contain at least one vowel.\");\r",
+							"});\r",
+							"\r",
+							"//3. Write a test to confirm that API responses return an error message when given an invalid API key.\r",
+							"pm.test(\"Verify API responses return an error message when given an invalid API key\", function () {    \r",
+							"    if(pm.response.code === 401){\r",
+							"        pm.expect(jsonData.message).contains(\"Invalid API key\");\r",
+							"        console.log(jsonData.message);\r",
+							"        pm.expect(jsonData).to.have.property(\"message\");\r",
+							"        pm.expect(jsonData.message).to.be.a(\"string\").and.not.empty;\r",
+							"    } else {\r",
+							"        //pm.expect.fail(\"Valid API key!\");\r",
+							"        console.warn(\"Skipping test: Expected 401 Unauthorized but received \" + pm.response.code);\r",
+							"        \r",
+							"    }    \r",
+							"});\r",
+							"// From Kealy\r",
+							"// 3. Confirm that API responses return an error message when given an invalid API key\r",
+							"if (pm.response.code === 401) {\r",
+							"    pm.test(\"API returns error for invalid API key\", function () {\r",
+							"        pm.expect(jsonData).to.have.property(\"message\");\r",
+							"        pm.expect(jsonData.message).to.be.a(\"string\").and.not.empty;\r",
+							"    });\r",
+							"} else {\r",
+							"    console.warn(\"Skipping test: Expected 401 Unauthorized but received \" + pm.response.code);\r",
+							"    pm.test.skip(\"Skipping test: Expected 401 Unauthorized but received \" + pm.response.code);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/2.5/weather?q={{city}}&units={{units}}&appid={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{city}}"
+						},
+						{
+							"key": "units",
+							"value": "{{units}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise 7: Chaining Requests in Postman",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"//pm.environment.set(\"cityId\", jsonData.id);\r",
+							"\r",
+							"var cityId = jsonData.id;\r",
+							"\r",
+							"let baseUrl = pm.environment.get(\"baseUrl\");\r",
+							"let city = pm.environment.get(\"city\");\r",
+							"let api_key = pm.environment.get(\"api_key\");\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"    url: `${baseUrl}/data/2.5/forecast?id=${cityId}&appid=${api_key}`,\r",
+							"    method: 'GET', \r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    }\r",
+							"    }, function (err, res) {\r",
+							"    \r",
+							"        let response = res.json();\r",
+							"\r",
+							"        pm.test(\"Status code is 200\", function () {\r",
+							"            pm.response.to.have.status(200);\r",
+							"        });\r",
+							"\r",
+							"        pm.test(\"city id in both responses matches\", function () {\r",
+							"            //console.log(cityId + \" \" + response.city.id);\r",
+							"            pm.expect(cityId).equals(parseInt(response.city.id));\r",
+							"        });\r",
+							"    \r",
+							"    }\r",
+							");\r",
+							"/*\r",
+							"pm.sendRequest(`${baseUrl}/data/2.5/forecast?id=${cityId}&appid=${api_key}`, (error, response) => {\r",
+							"    if(error){\r",
+							"        console.log(error);\r",
+							"    } else {\r",
+							"    let response = res.json();\r",
+							"\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"\r",
+							"    pm.test(\"city id in both responses matches\", function () {\r",
+							"        //console.log(cityId + \" \" + response.city.id);\r",
+							"        pm.expect(cityId).equals(parseInt(response.city.id));\r",
+							"    });\r",
+							"    }\r",
+							"});\r",
+							"*/"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/2.5/weather?q={{city}}&units={{units}}&appid={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{city}}"
+						},
+						{
+							"key": "units",
+							"value": "{{units}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
